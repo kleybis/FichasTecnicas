@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario serie 332</title>
+
+    <style>
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .button:hover {
+            background-color: #45a049;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <section class="section">
+        <label>Monitor</label>
+        <select id="monitor">
+            <option></option>
+            <option value="01">32” - 43”</option>
+            <option value="02">46” - 55”</option>
+            <option value="03">60” - 65”</option>
+            <option value="04">70” - 75”</option>
+            <option value="05">80” - 86”</option>
+        </select>
+    </section>
+
+    <section class="section">
+        <label>COLOR</label>
+        <select id="color">
+            <option></option>
+            <option value="A">Negro</option>
+            <option value="B">Blanco</option>
+            <option value="C">Gris</option>
+            <option value="P">Personalizado</option>
+        </select>
+    </section>
+
+    <section class="section">
+        <label>Bases</label>
+        <select id="bases">
+            <option></option>
+            <option value="E">Embellecedor</option>
+            <option value="R">Radios</option>
+            <option value="P">Plana</option>
+        </select>
+    </section>
+
+    <section class="section">
+        <label>Frontal</label>
+        <select id="frontal">
+            <option></option>
+            <option value="A">Aluminio</option>
+            <option value="C">Cristal Extra-claro</option>
+            <option value="E">Espejo</option>
+            <option value="R">Cristal Reflex</option>
+            <option value="M">Metacrilato</option>
+        </select>
+    </section>
+
+    <section class="section">
+        <label>Fondo</label>
+        <select id="fondo">
+            <option></option>
+            <option value="S">Fondo Simple</option>
+            <option value="D">Fondo Doble</option>
+            <option value="T">Fondo Triple</option>
+        </select>
+    </section>
+
+    <button class="button" onclick="codigoProducto()">Generar Ficha</button>
+    <button class="button" onclick="generarPDF()">Descargar PDF</button>
+    <div class="result" id="codigo"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+    <script>
+        function codigoProducto() {
+            const monitor = document.getElementById('monitor').value;
+            const color = document.getElementById('color').value;
+            const base = document.getElementById('bases').value;
+            const frontal = document.getElementById('frontal').value;
+            const fondo = document.getElementById('fondo').value;
+
+            let cod = "332" + monitor + color + base + frontal + fondo;
+
+            let ficha = `<h3>Codigo Producto:</h3>`;
+            ficha += `<p>${cod}</p>`;
+
+            document.getElementById('codigo').innerHTML = ficha;
+
+            return cod;
+        }
+
+        function caracteristicas_embellecedor(doc, monitor, base, fondo) {
+            var A;
+            var B;
+
+            switch (fondo) {
+                case "S":
+                    A = {
+                        "01": '780',
+                        "02": '880',
+                        "03": '1080',
+                        "04": '1180',
+                        "05": '1280',
+                    }[monitor] || "No seleccionando";
+
+                    if (A == '780' || A == '880' || A == '1030') {
+                        B = '400';
+                    } else {
+                        B = '500';
+                    }
+                    break; // Add break to prevent fall-through
+
+                case "D":
+                    A = {
+                        "01": '780',
+                        "02": '880',
+                        "03": '1080',
+                        "04": '1180',
+                        "05": '1280',
+                    }[monitor] || "No seleccionando";
+                    B = '500';
+                    break; // Add break to prevent fall-through
+
+                case "T":
+                    A = {
+                        "01": '780',
+                        "02": '880',
+                        "03": '1080',
+                        "04": '1180',
+                        "05": '1280',
+                    }[monitor] || "No seleccionando";
+                    B = '500';
+                    break; // Add break to prevent fall-through
+            }
+
+            const encabezados = [
+                ["A", "B"]
+            ];
+
+            const datos = [
+                [A, B]
+            ];
+
+            doc.autoTable({
+                head: encabezados,
+                body: datos,
+                startY: 400,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 3,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255],
+                    lineColor: [44, 62, 80],
+                    lineWidth: 0.5
+                },
+                headStyles: {
+                    fillColor: [227, 227, 227],
+                    textColor: [0, 0, 0],
+                    fontSize: 12
+                }
+            });
+        }
+
+        function generarPDF() {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            const monitor = document.getElementById('monitor').value;
+            const color = document.getElementById('color').value;
+            const base = document.getElementById('bases').value;
+            const frontal = document.getElementById('frontal').value;
+            const fondo = document.getElementById('fondo').value;
+            const codigo = codigoProducto();
+
+            function crearHeader(doc, pageNumber) {
+                doc.setFontSize(10);
+                doc.text('Mi Empresa', 10, 20);
+                doc.text(`Código del Producto: ${codigo}`, 10, 30);
+                doc.text(`Página ${pageNumber}`, 180, 20);
+                doc.line(10, 35, 200, 35);
+            }
+            // Función para verificar si necesitamos una nueva página
+            function verificarNuevaPagina(doc) {
+                if (doc.autoTable.previous.finalY >= 270) { // Verifica si el contenido se acerca al final de la página
+                    doc.addPage();
+                    crearHeader(doc, doc.internal.getNumberOfPages()); // Añadir el encabezado en la nueva página
+                }
+            }
+
+            // Función que dibuja el encabezado en todas las páginas
+            function repetirHeaderEnTodasLasPaginas(doc) {
+                const pageCount = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    doc.setPage(i);
+                    crearHeader(doc, i);
+                }
+            }
+
+            function tablaCaracteristicas(monitor, color, base, frontal, fondo) {
+                const pulgadas = {
+                    "01": '32” - 43”',
+                    "02": '46” - 55”',
+                    "03": '60” - 65”',
+                    "04": '70” - 75”',
+                    "05": '80” - 86”'
+                }[monitor] || "No especificado";
+
+                const dimen = {
+                    "01": '1800/700/80',
+                    "02": '2000/800/80',
+                    "03": '2000/950/80',
+                    "04": '2100/1100/80',
+                    "05": '2250/1200/80'
+                }[monitor] || "No especificado";
+
+                const colores = {
+                    "A": 'Negro',
+                    "B": 'Blanco',
+                    "C": 'Gris',
+                    "P": "Personalizado"
+                }[color] || "No especificado";
+
+                const bases = {
+                    "E": "Embellecedor",
+                    "R": 'Radios',
+                    "P": 'Plana'
+                }[base] || "No especificado";
+
+                const frontales = {
+                    "A": 'Aluminio',
+                    "C": 'Cristal Extra-claro',
+                    "E": "Espejo",
+                    "R": 'Cristal Reflex',
+                    "M": 'Metacrilato'
+                }[frontal] || "No especificado";
+
+                const fondos = {
+                    "S": 'Fondo Simple',
+                    "D": 'Fondo Doble',
+                    "T": 'Fondo Triple'
+                }[fondo] || "No especificado";
+
+                const encabezados = [
+                    ["Caracteristica", "Valor"]
+                ];
+                const datos = [
+                    ["Codigo", codigo],
+                    ["Frontal", frontales],
+                    ["Monitor", pulgadas],
+                    ["Color", colores],
+                    ["Fondo Util del Chais(C)", "58"],
+                    ["VESA", "MIS-F"],
+                    ["Tipo de Fondo", fondos],
+                    ["DIMENSIONES(mm)(A/B/C)", dimen],
+                ];
+
+                doc.autoTable({
+                    head: encabezados,
+                    body: datos,
+                    startY: 190,
+                    theme: 'grid',
+                    styles: {
+                        fontSize: 10,
+                        cellPadding: 3,
+                        textColor: [0, 0, 0],
+                        fillColor: [255, 255, 255],
+                        lineColor: [44, 62, 80],
+                        lineWidth: 0.5
+                    },
+                    headStyles: {
+                        fillColor: [227, 227, 227],
+                        textColor: [0, 0, 0],
+                        fontSize: 12
+                    }
+                });
+            }
+
+            crearHeader(doc, 1);
+            doc.setFontSize(12);
+            doc.text('Ficha del Producto', 105, 50, {
+                align: "center"
+            });
+            doc.text('Descripción de las características:', 10, 55);
+
+            tablaCaracteristicas(monitor, color, base, frontal, fondo);
+
+            caracteristicas_embellecedor(doc, monitor, base, fondo); // Pass doc as argument
+
+
+            // Verificar si se requiere una nueva página
+            verificarNuevaPagina(doc);
+
+            // Hacer que el encabezado se repita en todas las páginas
+            repetirHeaderEnTodasLasPaginas(doc);
+
+            doc.save('reporte-producto.pdf');
+        }
+    </script>
+
+</body>
+
+</html>

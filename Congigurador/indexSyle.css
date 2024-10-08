@@ -1,0 +1,122 @@
+table.minimalistBlack {
+    padding-top: 30px;
+    font-family: Verdana, Geneva, sans-serif;
+    border: 3px solid #FFF7E6;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+table.minimalistBlack td,
+table.minimalistBlack th {
+    border: 0px solid #000000;
+    padding: 5px 4px;
+}
+
+table.minimalistBlack tbody td {
+    font-size: 13px;
+}
+
+table.minimalistBlack thead {
+    background: #CFCFCF;
+    border-bottom: 3px solid #000000;
+}
+
+table.minimalistBlack thead th {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    border-left: 3px solid #D0E4F5;
+}
+
+table.minimalistBlack thead th:first-child {
+    border-left: none;
+}
+
+table.minimalistBlack tfoot td {
+    font-size: 14px;
+}
+
+header.cabezera {
+    font-size: larger;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    background-color: azure;
+    padding-bottom: 20px;
+}
+
+body.cuerpo {
+    padding-top: 10px;
+    margin-left: 30px;
+}
+
+.project-info {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    top: -10px;
+}
+
+.project-title {
+    font-weight: 500;
+    font-size: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: black;
+}
+
+.lighter {
+    font-size: 0.9em;
+}
+
+lighter {
+    font-size: 0.9em;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag {
+    font-weight: lighter;
+    color: grey;
+}
+
+.card {
+    background-color: white;
+    color: black;
+    width: 250px;
+    max-height: 330px;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.card-img {
+    position: relative;
+    top: -10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Change the .card-img div to .card-img img to use img*/
+
+.card-img a,
+.card-img img {
+    height: 170px;
+    width: 100%;
+    /* Change this width here to change the width of the color/image */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.card-imgs {
+    transition: all 0.5s;
+}
