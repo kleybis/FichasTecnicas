@@ -177,7 +177,7 @@
             doc.autoTable({
                 head: encabezados,
                 body: datos,
-                startY: 400,
+                startY: 70,
                 theme: 'grid',
                 styles: {
                     fontSize: 10,
@@ -193,6 +193,170 @@
                     fontSize: 12
                 }
             });
+        }
+
+        function caracteristicas_radios(doc, monitor, base, fondo) {
+
+
+            var A;
+            var B;
+
+            switch (fondo) {
+                case "S":
+                    A = {
+                        "01": '540',
+                        "02": '640',
+                        "03": '790',
+                        "04": '940',
+                        "05": '1040',
+                    }[monitor] || "No seleccionando";
+
+                    B = '380'
+
+                    break; // Add break to prevent fall-through
+
+                case "D", "T":
+                    A = {
+                        "01": '540',
+                        "02": '640',
+                        "03": '790',
+                        "04": '940',
+                        "05": '1040',
+                    }[monitor] || "No seleccionando";
+
+                    B = '400';
+                    break; // Add break to prevent fall-through
+            }
+
+            const encabezados = [
+                ["A", "B"]
+            ];
+
+            const datos = [
+                [A, B]
+            ];
+
+            doc.autoTable({
+                head: encabezados,
+                body: datos,
+                startY: 70,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 3,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255],
+                    lineColor: [44, 62, 80],
+                    lineWidth: 0.5
+                },
+                headStyles: {
+                    fillColor: [227, 227, 227],
+                    textColor: [0, 0, 0],
+                    fontSize: 12
+                }
+            });
+
+        }
+
+        function caracteristicas_plana(doc, monitor, base, fondo) {
+            var A;
+            var B;
+
+            switch (fondo) {
+                case "S":
+                    A = {
+                        "01": '780',
+                        "02": '800',
+                        "03": '950',
+                        "04": '1100',
+                        "05": '1200',
+                    }[monitor] || "No seleccionando";
+
+
+                    B = '380';
+
+                    break; // Add break to prevent fall-through
+
+                case "D":
+
+                    A = {
+                        "01": '780',
+                        "02": '800',
+                        "03": '950',
+                        "04": '1100',
+                        "05": '1200',
+                    }[monitor] || "No seleccionando";
+
+                    B = '400';
+                    break; // Add break to prevent fall-through
+
+                case "T":
+                    A = {
+                        "01": '780',
+                        "02": '800',
+                        "03": '950',
+                        "04": '1100',
+                        "05": '1200',
+                    }[monitor] || "No seleccionando";
+
+                    B = '480';
+                    break; // Add break to prevent fall-through
+            }
+
+            const encabezados = [
+                ["A", "B"]
+            ];
+
+            const datos = [
+                [A, B]
+            ];
+
+            doc.autoTable({
+                head: encabezados,
+                body: datos,
+                startY: 70,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 3,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255],
+                    lineColor: [44, 62, 80],
+                    lineWidth: 0.5
+                },
+                headStyles: {
+                    fillColor: [227, 227, 227],
+                    textColor: [0, 0, 0],
+                    fontSize: 12
+                }
+            });
+
+
+        }
+
+        function determinar_tipo_base(doc, monitor, base, fondo) {
+
+            switch (base) {
+                case "E":
+                    doc.text("BASE EMBELLECEDOR", 150, 60, {
+                        align: 'center'
+                    });
+                    caracteristicas_embellecedor(doc, monitor, base, fondo);
+                    break;
+                case "R":
+                    doc.text("BASE RADIOS", 150, 60, {
+                        align: 'center'
+                    });
+                    caracteristicas_radios(doc, monitor, base, fondo);
+                    break;
+                case "P":
+                    doc.text("BASE PLANA", 150, 60, {
+                        align: 'center'
+                    });
+                    caracteristicas_plana(doc, monitor, base, fondo);
+                    break;
+            }
+
         }
 
         function generarPDF() {
@@ -320,7 +484,9 @@
 
             tablaCaracteristicas(monitor, color, base, frontal, fondo);
 
-            caracteristicas_embellecedor(doc, monitor, base, fondo); // Pass doc as argument
+            determinar_tipo_base(doc, monitor, base, fondo);
+
+            //caracteristicas_embellecedor(doc, monitor, base, fondo); // Pass doc as argument
 
 
             // Verificar si se requiere una nueva página
