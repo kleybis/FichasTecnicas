@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Ficha de Producto</title>
+
+    <style>
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .button:hover {
+            background-color: #45a049;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section class="section">
+            <label>Monitor</label>
+            <select id="monitor">
+                <option></option>
+                <option value="01">32” - 43”</option>
+                <option value="02">46” - 55”</option>
+                <option value="03">60” - 65”</option>
+                <option value="04">70” - 75”</option>
+                <option value="05">80” - 86”</option>
+            </select>
+        </section>
+
+        <section class="section">
+            <label>COLOR</label>
+            <select id="color">
+                <option></option>
+                <option value="A">Negro</option>
+                <option value="B">Blanco</option>
+                <option value="C">Gris</option>
+                <option value="P">Personalizado</option>
+            </select>
+        </section>
+
+        <section class="section">
+            <label>Bases</label>
+            <select id="bases">
+                <option></option>
+                <option value="E">Embellecedor</option>
+                <option value="R">Radios</option>
+                <option value="P">Plana</option>
+            </select>
+        </section>
+
+        <section class="section">
+            <label>Frontal</label>
+            <select id="frontal">
+                <option></option>
+                <option value="A">Aluminio</option>
+                <option value="C">Cristal Extra-claro</option>
+                <option value="E">Espejo</option>
+                <option value="R">Cristal Reflex</option>
+                <option value="M">Metacrilato</option>
+            </select>
+        </section>
+
+        <section class="section">
+            <label>Fondo</label>
+            <select id="fondo">
+                <option></option>
+                <option value="S">Fondo Simple</option>
+                <option value="D">Fondo Doble</option>
+                <option value="T">Fondo Triple</option>
+            </select>
+        </section>
+
+        <button class="button" onclick="codigoProducto()">Generar ficha de producto</button>
+        <button class="button" id="downloadPdf" style="display:none;" onclick="descargarPDF()">Descargar como PDF</button>
+
+        <div id="resultContainer" class="result"></div>
+    </div>
+
+    <!-- Cargar las librerías jsPDF y DOMPurify -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.8/purify.min.js"></script>
+
+    <script>
+        function codigoProducto() {
+            // Obtener los valores del formulario
+            const monitor = document.getElementById('monitor').value;
+            const color = document.getElementById('color').value;
+            const bases = document.getElementById('bases').value;
+            const frontal = document.getElementById('frontal').value;
+            const fondo = document.getElementById('fondo').value;
+
+            // Generar el contenido del HTML
+            const htmlContent = `
+                <h1>Ficha de Producto Generada</h1>
+                <div class="section">
+                    <strong>Monitor:</strong> ${monitor || "No seleccionado"}
+                </div>
+                <div class="section">
+                    <strong>Color:</strong> ${color || "No seleccionado"}
+                </div>
+                <div class="section">
+                    <strong>Bases:</strong> ${bases || "No seleccionado"}
+                </div>
+                <div class="section">
+                    <strong>Frontal:</strong> ${frontal || "No seleccionado"}
+                </div>
+                <div class="section">
+                    <strong>Fondo:</strong> ${fondo || "No seleccionado"}
+                </div>
+            `;
+
+            // Mostrar el HTML generado en el contenedor de resultado
+            document.getElementById('resultContainer').innerHTML = htmlContent;
+
+            // Mostrar el botón para descargar el PDF
+            document.getElementById('downloadPdf').style.display = 'inline-block';
+        }
+
+        function descargarPDF() {
+            // Obtener el contenido del contenedor de resultado
+            const resultContainer = document.getElementById('resultContainer').innerHTML;
+
+            // Crear un nuevo documento PDF
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Sanea el HTML usando DOMPurify antes de añadirlo al PDF
+            const cleanContent = DOMPurify.sanitize(resultContainer);
+
+            // Añadir el contenido HTML saneado al PDF
+            doc.html(cleanContent, {
+                callback: function(doc) {
+                    // Descargar el PDF
+                    doc.save('ficha-producto.pdf');
+                },
+                x: 10,
+                y: 10
+            });
+        }
+    </script>
+</body>
+
+</html>
