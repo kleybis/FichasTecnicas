@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERIE 330</title>
+    <link href="../Fstyle.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+
+    <H1 class="titulo">SERIE 330</H1>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum debitis eveniet eum deserunt corporis accusamus, sed maiores ducimus quis, at officiis, assumenda dolorum! Libero, id labore consequuntur tenetur ab nemo.</p>
+
+
+    <fieldset id="f1">
+        <legend>Caracteristica</legend>
+
+        <section class="section">
+            <label>Distribucion</label>
+
+            <select id="distribucion">
+                <option></option>
+                <option value="Indoor Single Side">Indoor Single Side</option>
+                <option value="Indoor Double Side">Indoor Double Side</option>
+                <option value="Outdor Single Side">Outdor Single Side</option> 
+                <option value="Outdoor Double Side">Outdoor Double Side</option>
+                
+            </select>
+        </section>
+
+    </fieldset>
+
+    <section class="section">
+        <label>Monitor</label>
+        <select id="monitor">
+            <option></option>
+            <option value="01">32” - 43”</option>
+            <option value="02">46” - 55”</option>
+            <option value="03">60” - 65”</option>
+            <option value="04">70” - 75”</option>
+            <option value="05">80” - 86”</option>
+        </select>
+    </section>
+
+    <section class="section">
+        <label>COLOR</label>
+        <select id="color">
+            <option></option>
+            <option value="A">Negro</option>
+            <option value="B">Blanco</option>
+            <option value="C">Gris</option>
+            <option value="P">Personalizado</option>
+
+            
+        </select>
+
+        <label>Bases</label>
+        <select id="bases">
+            <option></option>
+            <option value="E">Embellecedor</option>
+            <option value="R">Radios</option>
+            <option value="P">Plana</option>
+        </select>
+
+    </section>
+
+
+
+    <section class="section">
+        <label>Frontal</label>
+        <select id="frontal">
+            <option></option>
+            <option value="A">Aluminio</option>
+            <option value="C">Cristal Extra-claro</option>
+            <option value="E">Espejo</option>
+            <option value="R">Cristal Reflex</option>
+            <option value="M">Metacrilato</option>
+        </select>
+
+        <label>Fondo</label>
+        <select id="fondo">
+            <option></option>
+            <option value="S">Fondo Simple</option>
+            <option value="D">Fondo Doble</option>
+            <option value="T">Fondo Triple</option>
+        </select>
+    </section>
+
+    <button class="button" onclick="codigoProducto()">Generar Ficha</button>
+    <button class="button" onclick="generarPDF()">Descargar PDF</button>
+    <div class="result" id="codigo"></div>
+
+    <script src="st330.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -122,6 +122,8 @@
             return cod;
         }
 
+        //Funcion para el manejo de imagenes necesarias
+
         function caracteristicas_embellecedor(doc, monitor, base, fondo) {
             var A;
             var B;
@@ -360,6 +362,8 @@
         }
 
         function generarPDF() {
+
+
             const {
                 jsPDF
             } = window.jspdf;
@@ -372,9 +376,16 @@
             const fondo = document.getElementById('fondo').value;
             const codigo = codigoProducto();
 
+            const imgUri = "https://picsum.photos/seed/picsum/200/300";
+
+            const img = new Image();
+            img.src = imgUri;
+
+
+
             function crearHeader(doc, pageNumber) {
                 doc.setFontSize(10);
-                doc.text('Mi Empresa', 10, 20);
+                doc.text('SteelPerformance', 10, 20);
                 doc.text(`Código del Producto: ${codigo}`, 10, 30);
                 doc.text(`Página ${pageNumber}`, 180, 20);
                 doc.line(10, 35, 200, 35);
@@ -475,6 +486,7 @@
                 });
             }
 
+
             crearHeader(doc, 1);
             doc.setFontSize(12);
             doc.text('Ficha del Producto', 105, 50, {
@@ -482,7 +494,13 @@
             });
             doc.text('Descripción de las características:', 10, 55);
 
+            img.onload = function() {
+                doc.addImage(img, 'PNG', 10, 80, 180, 230);
+            }
+
             tablaCaracteristicas(monitor, color, base, frontal, fondo);
+
+            doc.addPage();
 
             determinar_tipo_base(doc, monitor, base, fondo);
 
@@ -496,6 +514,11 @@
             repetirHeaderEnTodasLasPaginas(doc);
 
             doc.save('reporte-producto.pdf');
+
+            img.onerror = function() {
+                console.error('Error al cargar la imagen');
+            };
+
         }
     </script>
 
