@@ -76,7 +76,7 @@ function caracteristicas_embellecedor(doc, monitor, base, fondo) {
     doc.autoTable({
         head: encabezados,
         body: datos,
-        startY: 50,
+        startY: 220,
         theme: 'grid',
         styles: {
             fontSize: 10,
@@ -94,21 +94,18 @@ function caracteristicas_embellecedor(doc, monitor, base, fondo) {
 
         },
         columnStyles: {
-            0: { cellWidth: 50 }, // Primera columna más ancha
-            1: { cellWidth: 50 },
+            0: { cellWidth: 30 }, // Primera columna más ancha
+            1: { cellWidth: 30 },
 
         }
     });
 
 
+    doc.text('BASE', 105, 210, { align: 'center' });
+
     imgBase = 'imagenes/baseEmbellecedor.png';
     imgbase.src = imgBase;
-    doc.addImage(imgbase, 'PNG', 10, 80, 100, 60);
-
-    imgPlano = 'imagenes/330embellecedor.png';
-    img.src = imgPlano;
-    doc.addImage(img, 'PNG', 130, 45, 70, 100);
-
+    doc.addImage(imgbase, 'PNG', 100, 213, 100, 60);
 }
 
 function caracteristicas_radios(doc, monitor, base, fondo) {
@@ -485,12 +482,164 @@ function fondoSimple(doc, monitor, ) {
 
 }
 
+function fondoDoble(doc, monitor) {
+
+    var imgPlano;
+    const img = new Image()
+
+    var dimensiones;
+    var Fondo_util = '140';
+    var vesa = 'MIS-F';
+    var Mpulgadas;
+
+    switch (monitor) {
+        case "01":
+            dimensiones = '1800/700/165';
+            Mpulgadas = ' 32" - 43" '
+            break;
+        case "02":
+            dimensiones = '2000/800/165';
+            Mpulgadas = ' 46" - 55" '
+            break;
+        case "03":
+            dimensiones = '2000/950/165';
+            Mpulgadas = ' 60" - 65" '
+            break;
+        case "04":
+            dimensiones = '2100/1100/165';
+            Mpulgadas = ' 70" - 75" '
+            break;
+        case "05":
+            dimensiones = '2250/1200/165';
+            Mpulgadas = ' 80" - 86" '
+            break;
+
+    }
+
+
+    const encabezados = [
+        ["CODIGO", "MONITOR(D)", "FONDO UTIL CHASIS", "VESA", "DIMENSIONES(A/B/C)"]
+    ];
+
+    const datos = [
+        ["CODIGO", Mpulgadas, Fondo_util, vesa, dimensiones]
+    ];
+
+
+    doc.autoTable({
+        head: encabezados,
+        body: datos,
+        startY: 180,
+        theme: 'grid',
+        styles: {
+            fontSize: 10,
+            cellPadding: 2,
+            textColor: [0, 0, 0],
+            fillColor: [255, 255, 255],
+            lineColor: [44, 62, 80],
+            lineWidth: 0.5,
+            halign: 'center'
+        },
+        headStyles: {
+            fillColor: [227, 227, 227],
+            textColor: [0, 0, 0],
+            fontSize: 12,
+            halign: 'center'
+
+        },
+        tableWidh: 'auto'
+    });
+
+    imgPlano = 'imagenes/fondoDoble.png';
+    img.src = imgPlano;
+    doc.addImage(img, 'PNG', 10, 45, 190, 120);
+}
+
+
+function fondoTriple(doc, monitor) {
+
+    var imgPlano;
+    const img = new Image()
+
+    var dimensiones;
+    var Fondo_util = '225';
+    var vesa = 'MIS-F';
+    var Mpulgadas;
+
+    switch (monitor) {
+        case "01":
+            dimensiones = '1800/700/250';
+            Mpulgadas = ' 32" - 43" '
+            break;
+        case "02":
+            dimensiones = '2000/800/250';
+            Mpulgadas = ' 46" - 55" '
+            break;
+        case "03":
+            dimensiones = '2000/950/250';
+            Mpulgadas = ' 60" - 65" '
+            break;
+        case "04":
+            dimensiones = '2100/1100/250';
+            Mpulgadas = ' 70" - 75" '
+            break;
+        case "05":
+            dimensiones = '2250/1200/250';
+            Mpulgadas = ' 80" - 86" '
+            break;
+
+    }
+
+
+    const encabezados = [
+        ["CODIGO", "MONITOR(D)", "FONDO UTIL CHASIS", "VESA", "DIMENSIONES(A/B/C)"]
+    ];
+
+    const datos = [
+        ["CODIGO", Mpulgadas, Fondo_util, vesa, dimensiones]
+    ];
+
+
+    doc.autoTable({
+        head: encabezados,
+        body: datos,
+        startY: 180,
+        theme: 'grid',
+        styles: {
+            fontSize: 10,
+            cellPadding: 2,
+            textColor: [0, 0, 0],
+            fillColor: [255, 255, 255],
+            lineColor: [44, 62, 80],
+            lineWidth: 0.5,
+            halign: 'center'
+        },
+        headStyles: {
+            fillColor: [227, 227, 227],
+            textColor: [0, 0, 0],
+            fontSize: 12,
+            halign: 'center'
+
+        },
+        tableWidh: 'auto'
+    });
+
+    imgPlano = 'imagenes/fondoTriple.png';
+    img.src = imgPlano;
+    doc.addImage(img, 'PNG', 10, 45, 190, 120);
+}
+
 function determinar_tipo_fondo(doc, monitor, fondo) {
 
     switch (fondo) {
         case "S":
             fondoSimple(doc, monitor);
             break
+        case "D":
+            fondoDoble(doc, monitor);
+            break;
+        case "T":
+            fondoTriple(doc, monitor);
     }
 }
 
@@ -663,54 +812,6 @@ function generarPDF() {
 
     }
 
-    function imgPlanoBase(doc, base) {
-
-
-        var imgPlano;
-        var imgBase;
-        const img = new Image()
-        const imgbase = new Image()
-
-        img.onload = function() {
-            switch (base) {
-                case "E":
-
-                    //imgPlano = 'imagenes/330embellecedor.png';
-                    //img.src = imgPlano;
-                    //doc.addImage(img, 'PNG', 30, 70, 70, 100);
-
-                    imgBase = 'imagenes/baseEmbellecedor.png';
-                    imgbase.src = imgBase;
-                    doc.addImage(imgbase, 'PNG', 50, 30, 40, 60);
-
-                    break;
-                case "P":
-                    //imgPlano = 'imagenes/330plano.png';
-                    //img.src = imgPlano;
-                    //doc.addImage(img, 'PNG', 80, 70, 70, 100);
-
-                    imgBase = 'imagenes/basePlana.png';
-                    imgbase.src = imgBase;
-                    doc.addImage(imgbase, 'PNG', 50, 30, 40, 60);
-
-                    break;
-                case "R":
-                    //imgPlano = 'imagenes/330radios.png';
-                    //img.src = imgPlano;
-                    //doc.addImage(img, 'PNG', 80, 70, 70, 100);
-
-                    imgBase = 'imagenes/baseRadios.png';
-                    imgbase.src = imgBase;
-                    doc.addImage(imgbase, 'PNG', 50, 30, 40, 60);
-
-                    break;
-            }
-        }
-        img.onerror = function() {
-            console.error('Error al cargar la imagen');
-
-        };
-    }
 
 
     function pag_monitor(doc, monitor, base, fondo) {
@@ -726,7 +827,7 @@ function generarPDF() {
         });
         doc.setFont('helvetica', 'normal');
         determinar_tipo_base(doc, monitor, base, fondo);
-        imgPlanoBase(doc, base);
+        // imgPlanoBase(doc, base);
 
     }
 
@@ -743,6 +844,25 @@ function generarPDF() {
         });
         doc.setFont('helvetica', 'normal');
         determinar_tipo_fondo(doc, monitor, fondo);
+    }
+
+    function pag_caracteristicas_fisicas(doc, monitor, base, fondo) {
+        doc.addPage();
+
+        doc.setFontSize(15);
+
+        doc.setFont('helvetica', 'bold');
+        doc.line(10, 40, 70, 40);
+        doc.line(200, 40, 140, 40);
+        doc.text('CARACTERISTICAS FISICAS', 105, 41, {
+            align: "center"
+        });
+
+        doc.setFont('helvetica', 'normal');
+
+        determinar_tipo_fondo(doc, monitor, fondo);
+
+        determinar_tipo_base(doc, monitor, base, fondo);
     }
 
 
@@ -768,17 +888,11 @@ function generarPDF() {
         tablaCaracteristicas(monitor, color, base, frontal, fondo);
 
         pag_monitor(doc, monitor, base, fondo);
-        pag_fondo(doc, monitor, base, fondo);
-        imgPlanoBase(doc, base);
+        pag_caracteristicas_fisicas(doc, monitor, base, fondo);
+
+
         //doc.addPage();
 
-        //determinar_tipo_base(doc, monitor, base, fondo);
-
-
-        //caracteristicas_embellecedor(doc, monitor, base, fondo); // Pass doc as argument
-
-
-        // Verificar si se requiere una nueva página
         verificarNuevaPagina(doc);
 
         // Hacer que el encabezado se repita en todas las páginas
