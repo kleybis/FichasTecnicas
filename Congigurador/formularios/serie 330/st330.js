@@ -110,16 +110,11 @@ function caracteristicas_embellecedor(doc, monitor, base, fondo) {
 
 function caracteristicas_radios(doc, monitor, base, fondo) {
 
-
     var A;
     var B;
 
-    var imgPlano;
-    const img = new Image()
-
     var imgBase;
     const imgbase = new Image()
-
 
     switch (fondo) {
         case "S":
@@ -161,7 +156,7 @@ function caracteristicas_radios(doc, monitor, base, fondo) {
     doc.autoTable({
         head: encabezados,
         body: datos,
-        startY: 50,
+        startY: 220,
         theme: 'grid',
         styles: {
             fontSize: 10,
@@ -179,28 +174,23 @@ function caracteristicas_radios(doc, monitor, base, fondo) {
 
         },
         columnStyles: {
-            0: { cellWidth: 50 }, // Primera columna más ancha
-            1: { cellWidth: 50 },
+            0: { cellWidth: 30 }, // Primera columna más ancha
+            1: { cellWidth: 30 },
 
         }
     });
 
+    doc.text('BASE', 105, 210, { align: 'center' });
+
     imgBase = 'imagenes/baseRadios.png';
     imgbase.src = imgBase;
-    doc.addImage(imgbase, 'PNG', 10, 80, 100, 60);
-
-    imgPlano = 'imagenes/330radios.png';
-    img.src = imgPlano;
-    doc.addImage(img, 'PNG', 130, 45, 70, 100);
+    doc.addImage(imgbase, 'PNG', 100, 213, 100, 60);
 
 }
 
 function caracteristicas_plana(doc, monitor, base, fondo) {
     var A;
     var B;
-
-    var imgPlano;
-    const img = new Image()
 
     var imgBase;
     const imgbase = new Image()
@@ -259,7 +249,7 @@ function caracteristicas_plana(doc, monitor, base, fondo) {
     doc.autoTable({
         head: encabezados,
         body: datos,
-        startY: 50,
+        startY: 220,
         theme: 'grid',
         styles: {
             fontSize: 10,
@@ -277,29 +267,23 @@ function caracteristicas_plana(doc, monitor, base, fondo) {
 
         },
         columnStyles: {
-            0: { cellWidth: 50 }, // Primera columna más ancha
-            1: { cellWidth: 50 },
+            0: { cellWidth: 30 }, // Primera columna más ancha
+            1: { cellWidth: 30 },
 
         }
     });
 
+    doc.text('BASE', 105, 210, { align: 'center' });
+
     imgBase = 'imagenes/basePlana.png';
     imgbase.src = imgBase;
-    doc.addImage(imgbase, 'PNG', 10, 80, 100, 60);
-
-    imgPlano = 'imagenes/330plano.png';
-    img.src = imgPlano;
-    doc.addImage(img, 'PNG', 130, 45, 70, 100);
-
+    doc.addImage(imgbase, 'PNG', 100, 213, 100, 60);
 
 }
 
 function caracteristicas_inclinada(doc, monitor, base, fondo) {
     var A;
     var B;
-
-    var imgPlano;
-    const img = new Image()
 
     var imgBase;
     const imgbase = new Image()
@@ -353,7 +337,7 @@ function caracteristicas_inclinada(doc, monitor, base, fondo) {
     doc.autoTable({
         head: encabezados,
         body: datos,
-        startY: 50,
+        startY: 220,
         theme: 'grid',
         styles: {
             fontSize: 10,
@@ -371,20 +355,17 @@ function caracteristicas_inclinada(doc, monitor, base, fondo) {
 
         },
         columnStyles: {
-            0: { cellWidth: 50 }, // Primera columna más ancha
-            1: { cellWidth: 50 },
+            0: { cellWidth: 30 }, // Primera columna más ancha
+            1: { cellWidth: 30 },
 
         }
     });
 
+    doc.text('BASE', 105, 210, { align: 'center' });
+
     imgBase = 'imagenes/baseInclinada.png';
     imgbase.src = imgBase;
-    doc.addImage(imgbase, 'PNG', 10, 80, 100, 60);
-
-    imgPlano = 'imagenes/330inclinado.png';
-    img.src = imgPlano;
-    doc.addImage(img, 'PNG', 130, 45, 70, 100);
-
+    doc.addImage(imgbase, 'PNG', 100, 213, 100, 60);
 
 }
 
@@ -682,8 +663,12 @@ function generarPDF() {
         doc.text(tipo, 10, 30);
         doc.setFont('helvetica', 'normal');
 
-        doc.addImage(im, 'PNG', 165, 10, 30, 20)
-            //doc.text(`Página ${pageNumber}`, 165, 20);
+        doc.addImage(im, 'PNG', 165, 10, 30, 20);
+
+        doc.text(`-${pageNumber}-`, 190, 290);
+        doc.setFontSize(7);
+        doc.text('ww.steelperformance.es', 10, 288);
+        doc.text('info@steelperformance.es', 10, 291);
 
     }
     // Función para verificar si necesitamos una nueva página
@@ -814,39 +799,9 @@ function generarPDF() {
 
 
 
-    function pag_monitor(doc, monitor, base, fondo) {
-        doc.addPage();
-
-        doc.setFontSize(15);
-
-        doc.setFont('helvetica', 'bold');
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
-        doc.text('CARACTERISTICAS DE LA BASE', 105, 41, {
-            align: "center"
-        });
-        doc.setFont('helvetica', 'normal');
-        determinar_tipo_base(doc, monitor, base, fondo);
-        // imgPlanoBase(doc, base);
-
-    }
-
-    function pag_fondo(doc, monitor, base, fondo) {
-        doc.addPage();
-
-        doc.setFontSize(15);
-
-        doc.setFont('helvetica', 'bold');
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
-        doc.text('CARACTERISTICAS DEL FONDO', 105, 41, {
-            align: "center"
-        });
-        doc.setFont('helvetica', 'normal');
-        determinar_tipo_fondo(doc, monitor, fondo);
-    }
 
     function pag_caracteristicas_fisicas(doc, monitor, base, fondo) {
+
         doc.addPage();
 
         doc.setFontSize(15);
@@ -863,9 +818,77 @@ function generarPDF() {
         determinar_tipo_fondo(doc, monitor, fondo);
 
         determinar_tipo_base(doc, monitor, base, fondo);
+
     }
 
+    function pag_carac_tecnicas(doc) {
 
+        doc.addPage();
+
+        doc.setFontSize(15);
+
+        doc.setFont('helvetica', 'bold');
+        doc.line(10, 40, 70, 40);
+        doc.line(200, 40, 140, 40);
+        doc.text('CARACTERISTICAS TECNICAS', 105, 41, {
+            align: "center"
+        });
+
+        doc.setCharSpace(0);
+        doc.setFontSize(9);
+
+        doc.text('GARANTÍA, DURABILIDAD Y CONTROL', 10, 180);
+        doc.text('PROTECCION PARA INTEMPERIE', 80, 180);
+        doc.text('ALIMENTACIÓN Y CONSUMO ELECTRICO', 140, 180);
+
+        doc.text('MATERIALES', 10, 240);
+        doc.text('COMPONENTES', 100, 240);
+
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+
+        doc.text('- Protección eléctrica y electromagnética', 10, 185)
+        doc.text('- Protección radiación solar y anti-vandálica', 10, 190)
+        doc.text('- Control de temperatura interna (10ºC - 45ºC)', 10, 195)
+        doc.text('- Garantia - 3 años', 10, 200);
+
+        //
+
+        doc.text('- Grado de protección IP65', 80, 185)
+        doc.text('- Fabricado en materiales anticorrosivos', 80, 190)
+        doc.text('- Temperatura exterior desde -20ºC hasta 45ºC ', 80, 195)
+        doc.text('- Cierres de seguridad ', 80, 200);
+
+        doc.text('- Protección eléctrica y electromagnética', 140, 185)
+        doc.text('- Protección radiación solar y anti-vandálica', 140, 190)
+        doc.text('- Control de temperatura interna (10ºC - 45ºC)', 140, 195)
+
+
+    }
+
+    function pag_cara_monitor() {
+
+        doc.addPage();
+
+        doc.setFontSize(15);
+
+        doc.setFont('helvetica', 'bold');
+        doc.line(10, 40, 70, 40);
+        doc.line(200, 40, 140, 40);
+        doc.text('CARACTERISTICAS TECNICAS', 105, 41, {
+            align: "center"
+        });
+
+        doc.setFontSize(12)
+        doc.setTextColor(90, 163, 205);
+
+        doc.text('PANEL', 30, 60);
+        doc.text('CONECTIVIDAD', 30, 110)
+        doc.text('STANDARD(CERTIFICACION)', 30, 160)
+        doc.text('COMPATIBILIDAD DE SOFTWARE', 30, 220)
+
+
+    }
     img.onload = function() {
 
         crearHeader(doc, 1);
@@ -887,11 +910,10 @@ function generarPDF() {
         // doc.addImage(im, 'PNG', 10, 80, 180, 100);
         tablaCaracteristicas(monitor, color, base, frontal, fondo);
 
-        pag_monitor(doc, monitor, base, fondo);
         pag_caracteristicas_fisicas(doc, monitor, base, fondo);
 
-
-        //doc.addPage();
+        pag_carac_tecnicas(doc);
+        pag_cara_monitor(doc);
 
         verificarNuevaPagina(doc);
 
