@@ -5,6 +5,8 @@ function codigoProducto() {
     const frontal = document.getElementById('frontal').value;
     const fondo = document.getElementById('fondo').value;
 
+    const tpantalla = document.getElementById('tam_pantalla').value;
+
     let cod = "330" + monitor + color + base + frontal + fondo;
 
     let ficha = `<h3>Codigo Producto:</h3>`;
@@ -641,8 +643,10 @@ function generarPDF() {
     const tipo = document.getElementById('distribucion').value;
 
     const im = "imagenes/logo_dark.png";
-
-
+    // DATOS DEL MONITOR
+    const tpantalla = document.getElementById('tam_pantalla').value;
+    const resolucion = document.getElementById('resolucion').value;
+    const brillo = document.getElementById('brillo').value;
 
 
     const img = new Image();
@@ -807,8 +811,13 @@ function generarPDF() {
         doc.setFontSize(15);
 
         doc.setFont('helvetica', 'bold');
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
+
+        doc.setDrawColor(0, 0, 0);
+
+        doc.setLineWidth(0.5);
+        doc.line(10, 40, 50, 40);
+        doc.line(200, 40, 160, 40);
+
         doc.text('CARACTERISTICAS FISICAS', 105, 41, {
             align: "center"
         });
@@ -826,10 +835,16 @@ function generarPDF() {
         doc.addPage();
 
         doc.setFontSize(15);
-
+        doc.setTextColor(0, 0, 0);
         doc.setFont('helvetica', 'bold');
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
+
+        doc.setDrawColor(0, 0, 0);
+
+        doc.setLineWidth(0.5);
+        doc.line(10, 40, 50, 40);
+        doc.line(200, 40, 160, 40);
+
+
         doc.text('CARACTERISTICAS TECNICAS', 105, 41, {
             align: "center"
         });
@@ -866,16 +881,20 @@ function generarPDF() {
 
     }
 
-    function pag_cara_monitor() {
+    function pag_cara_monitor(doc, tpantalla, resolucion, brillo) {
 
         doc.addPage();
 
         doc.setFontSize(15);
 
         doc.setFont('helvetica', 'bold');
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
-        doc.text('CARACTERISTICAS TECNICAS', 105, 41, {
+        doc.setDrawColor(0, 0, 0);
+
+        doc.setLineWidth(0.5);
+        doc.line(10, 40, 50, 40);
+        doc.line(200, 40, 160, 40);
+
+        doc.text('CARACTERISTICAS MONITOR', 105, 41, {
             align: "center"
         });
 
@@ -883,37 +902,34 @@ function generarPDF() {
         doc.setTextColor(90, 163, 205);
 
         doc.text('PANEL', 30, 60);
-        doc.text('CONECTIVIDAD', 30, 110)
-        doc.text('STANDARD(CERTIFICACION)', 30, 160)
-        doc.text('COMPATIBILIDAD DE SOFTWARE', 30, 220)
+        doc.text('CONECTIVIDAD', 30, 100)
+        doc.text('STANDARD(CERTIFICACION)', 30, 150)
+        doc.text('COMPATIBILIDAD DE SOFTWARE', 30, 210)
 
-
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(10);
+        doc.text(`· Tamaño de pantalla:${tpantalla}`, 31, 65);
+        doc.text(`· Resolución:${brillo}`, 31, 70)
+        doc.text(`· Brillo (Typ, cd/m):${brillo}`, 31, 75)
     }
     img.onload = function() {
 
-        crearHeader(doc, 1);
-        doc.line(10, 40, 70, 40);
-        doc.line(200, 40, 140, 40);
-        doc.setFontSize(15);
-
-        doc.setFont('helvetica', 'bold');
-        doc.text('Ficha del Producto', 105, 41, {
-            align: "center"
-        });
-        doc.setFont('helvetica', 'normal');
-
-        doc.setFontSize(12);
-        doc.text('Descripción de las características:', 10, 55);
+        tablaCaracteristicas(monitor, color, base, frontal, fondo);
         imgTotal(doc, base);
 
+        pag_carac_tecnicas(doc);
 
-        // doc.addImage(im, 'PNG', 10, 80, 180, 100);
-        tablaCaracteristicas(monitor, color, base, frontal, fondo);
+        pag_cara_monitor(doc, tpantalla, resolucion, brillo);
 
         pag_caracteristicas_fisicas(doc, monitor, base, fondo);
 
-        pag_carac_tecnicas(doc);
-        pag_cara_monitor(doc);
+
+
+
+        // doc.addImage(im, 'PNG', 10, 80, 180, 100);
+
+
 
         verificarNuevaPagina(doc);
 
